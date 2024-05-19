@@ -1,14 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Profile = () => {
+const Bookmark = () => {
   return (
     <View>
-      <Text>Profile</Text>
+      <Text>Bookmark</Text>
     </View>
   )
 }
 
-export default Profile
-
-const styles = StyleSheet.create({})
+export default Bookmark
