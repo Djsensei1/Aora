@@ -4,8 +4,13 @@ import { Redirect, router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../constants';
 import CustomButton from '../components/CustomButton';
+import { useGlobalContext } from '../context/GlobalProvider';
 
 export default function App() {
+  const { isLoading, isLogged } = useGlobalContext();
+
+  if (!isLoading && isLogged) return <Redirect href="/home" />;
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: '100%' }}>
@@ -30,7 +35,7 @@ export default function App() {
               Possibilities with{' '}
               <Text className="text-secondary-200">Aora</Text>
             </Text>
-            <Image 
+            <Image
               source={images.path}
               className="w-[136px] h-[15px] absolute -bottom-2 -right-8"
               resizeMode='contain'
@@ -47,7 +52,7 @@ export default function App() {
         </View>
 
 
-        <StatusBar 
+        <StatusBar
           backgroundColor='#161622'
           style='light'
         />
