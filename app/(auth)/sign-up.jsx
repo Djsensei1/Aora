@@ -1,11 +1,14 @@
-import { ScrollView, Text, View, Image } from 'react-native'
+import { ScrollView, Text, View, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { router } from 'expo-router'
 
 import { images } from '../../constants'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 import { Link } from 'expo-router'
+
+import { createUser } from '../../lib/appwrite'
 
 const SignUp = () => {
   
@@ -19,7 +22,25 @@ const SignUp = () => {
   
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const submit = () => {}
+  const submit = async () => {
+    if(!form.username || !form.email || !form.password){
+      Alert.alert('Error', 'Please fill in all the fields')
+    }
+    
+    setIsSubmitting(true)
+    
+    try {
+      const result =await createUser(form.email, form.password, form.username)
+
+      // set it to global state...
+
+      router.replace('/home')
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -54,7 +75,7 @@ const SignUp = () => {
           />
 
           <CustomButton 
-            title="Sign In"
+            title="Sign Up"
             handlePress={submit}
             ContainerStyles="mt-7"
             isLoading={isSubmitting}
@@ -64,7 +85,7 @@ const SignUp = () => {
             <Text className="text-lg text-gray-100 font-pregular">
               Already have an account?
             </Text>
-            <Link href="/sign-up" className="text-lg text-secondary-200 font-psemibold">Sign In</Link>
+            <Link href="/sign-in" className="text-lg text-secondary-200 font-psemibold">Sign In</Link>
           </View>
         </View>
       </ScrollView>
