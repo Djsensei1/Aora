@@ -1,8 +1,7 @@
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image, TouchableOpacity } from 'react-native'
 import { React, useState } from 'react'
 
 import { icons } from '../constants'
-import { TouchableOpacity } from 'react-native-web';
 
 const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avatar } } }) => {
     const [play, setPlay] = useState(false);
@@ -39,7 +38,11 @@ const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avat
         {play ? (
             <Text>Playing</Text>
         ) : (
-            <TouchableOpacity>
+            <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => setPlay(true)}
+                className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
+            >
                 <Image 
                     source={{ uri: thumbnail }}
                     className="w-full h-full rounded-xl mt-5"
